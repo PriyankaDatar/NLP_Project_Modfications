@@ -8,7 +8,7 @@ from .modules.word_embedding import WordEmbedding
 from .modules.aggregator_predict import AggPredictor
 from .modules.selection_predict import SelPredictor
 from .modules.sqlnet_condition_predict import SQLNetCondPredictor
-from .modules.net_utils import run_lstm, col_name_encode
+from .modules.net_utils import run_lstm, col_name_encode,run_GRU,col_name_encode_GRU
 
 
 class SQLNet(nn.Module):
@@ -44,7 +44,16 @@ class SQLNet(nn.Module):
         self.col_name_enc = nn.LSTM(input_size=N_word, hidden_size=(int)(N_h / 2),
                                          num_layers=N_depth, batch_first=True,
                                          dropout=0.3, bidirectional=True)
+
+        self.col_name_enc_GRU = nn.GRU(input_size=N_word, hidden_size=(int)(N_h / 2),
+                                         num_layers=N_depth, batch_first=True,
+                                         dropout=0.3, bidirectional=True)
+
         self.henc_lstm = nn.LSTM(input_size=N_word, hidden_size=(int)(N_h/2),
+                num_layers=N_depth, batch_first=True,
+                dropout=0.3, bidirectional=True)
+
+        self.henc_GRU = nn.GRU(input_size=N_word, hidden_size=(int)(N_h/2),
                 num_layers=N_depth, batch_first=True,
                 dropout=0.3, bidirectional=True)
 
@@ -81,7 +90,7 @@ class SQLNet(nn.Module):
             while st < len(cur_query):
                 ed = len(cur_query) if 'AND' not in cur_query[st:]\
                         else cur_query[st:].index('AND') + st
-                if 'EQL' in cur_query[st:ed]:
+                if'EQL' in cur_query[st:ed]:
                     op = cur_query[st:ed].index('EQL') + st
                 elif 'GT' in cur_query[st:ed]:
                     op = cur_query[st:ed].index('GT') + st
@@ -138,14 +147,19 @@ class SQLNet(nn.Module):
         col_inp_var, col_name_len, col_len = \
                 self.embed_layer.gen_col_batch(col)
 
-        h_enc, _ = run_lstm(self.henc_lstm, x_emb_var, x_len)
+        # h_enc, _ = run_lstm(self.henc_lstm, x_emb_var, x_len)
+        #
+        h_enc =run_GRU(self.henc_GRU, x_emb_var, x_len)
 
         max_x_len = max(x_len)
 
         ##start
-        e_num_col, col_num_mod = col_name_encode(col_inp_var, col_name_len,
-                                             col_len, self.col_name_enc)
-        ##end
+        # e_num_col, col_num_mod = col_name_encode(col_inp_var, col_name_len,
+        #                                      col_len, self.col_name_enc)
+
+        e_num_col, col_num_mod = col_name_encode_GRU(col_inp_var, col_name_len,
+                                             col_len, self.col_name_enc_GRU)
+        #end
 
         if pred_agg:
             agg_score = self.agg_pred(x_emb_var, x_len,e_num_col,col_num_mod,h_enc, col_inp_var,
