@@ -60,9 +60,9 @@ class SQLNet(nn.Module):
         self.agg_bi_att = nn.Bilinear(N_h, N_h, 1)
 
         ##end
-        # self.att_weight_c = nn.Linear(N_h, 1)
-        # self.att_weight_q = nn.Linear(N_h, 1)
-        # self.att_weight_cq = nn.Linear(N_h , 1)
+        self.att_weight_c = nn.Linear(N_h, 1)
+        self.att_weight_q = nn.Linear(N_h, 1)
+        self.att_weight_cq = nn.Linear(N_h , 1)
         ##
 
 
@@ -122,8 +122,6 @@ class SQLNet(nn.Module):
         sel_score = None
         cond_score = None
 
-        # is_train=False
-
         #Predict aggregator
         # if self.trainable_emb:
         #     if pred_agg:
@@ -171,8 +169,8 @@ class SQLNet(nn.Module):
 
         # att_val=self.agg_bi_att(h_enc,e_num_col.unsqueeze(1).repeat(1,h_enc.shape[1],1)).squeeze()
 
-        # g = self.att_flow_layer(h_enc, e_num_col)
-        # h_enc=g
+        g = self.att_flow_layer(h_enc, e_num_col)
+        h_enc=g
         if pred_agg:
             agg_score = self.agg_pred(x_emb_var, x_len,e_num_col,col_num_mod,h_enc, col_inp_var,
                     col_name_len, col_len, col_num, gt_sel=gt_sel)   #[64,6]

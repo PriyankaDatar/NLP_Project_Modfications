@@ -82,7 +82,7 @@ if __name__ == '__main__':
         print("Init dev acc_ex: %s"%epoch_exec_acc(
                 model, BATCH_SIZE, val_sql_data, val_table_data, DEV_DB))
         torch.save(model.cond_pred.state_dict(), cond_m)
-        for i in range(100):
+        for i in range(5):
             print('Epoch %d @ %s'%(i+1, datetime.datetime.now()))
             print(' Avg reward = %s'%epoch_reinforce_train(
                 model, optimizer, BATCH_SIZE, sql_data, table_data, TRAIN_DB))

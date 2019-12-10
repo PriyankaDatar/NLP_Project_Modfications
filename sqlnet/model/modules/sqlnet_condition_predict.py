@@ -104,7 +104,7 @@ class SQLNetCondPredictor(nn.Module):
         return ret_inp_var, ret_len #[B, IDX, max_len, max_tok_num]
 
 
-    def forward(self, x_emb_var, x_len,e_num_col,col_num_mod,h_enc, col_inp_var, col_name_len,
+    def forward(self, x_emb_var, x_len,e_cond_col,col_num_mod,h_enc, col_inp_var, col_name_len,
             col_len, col_num, gt_where, gt_cond, reinforce):
         max_x_len = max(x_len)
         B = len(x_len)
@@ -114,8 +114,8 @@ class SQLNetCondPredictor(nn.Module):
         # Predict the number of conditions
         # First use column embeddings to calculate the initial hidden unit
         # Then run the LSTM and predict condition number.
-        # e_num_col, col_num = col_name_encode(col_inp_var, col_name_len,
-        #         col_len, self.cond_num_name_enc)
+        e_num_col, col_num = col_name_encode(col_inp_var, col_name_len,
+                col_len, self.cond_num_name_enc)
         col_num=col_num_mod
 
         num_col_att_val = self.cond_num_col_att(e_num_col).squeeze()
@@ -145,8 +145,8 @@ class SQLNetCondPredictor(nn.Module):
         cond_num_score = self.cond_num_out(K_cond_num)
 
         #Predict the columns of conditions
-        e_cond_col, _ = col_name_encode(col_inp_var, col_name_len, col_len,
-                self.cond_col_name_enc)
+        # e_cond_col, _ = col_name_encode(col_inp_var, col_name_len, col_len,
+        #         self.cond_col_name_enc)
 
         # h_col_enc, _ = run_lstm(self.cond_col_lstm, x_emb_var, x_len)
         h_col_enc = h_enc

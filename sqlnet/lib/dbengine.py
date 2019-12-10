@@ -47,6 +47,6 @@ class DBEngine:
         if where_clause:
             where_str = 'WHERE ' + ' AND '.join(where_clause)
         query = 'SELECT {} AS result FROM {} {}'.format(select, table_id, where_str)
-        #print query
+        print (query)
         out = self.db.query(query, **where_map)
         return [o.result for o in out]

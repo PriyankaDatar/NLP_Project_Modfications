@@ -22,6 +22,9 @@ class AggPredictor(nn.Module):
                     hidden_size=(int)(N_h/2), num_layers=N_depth,
                     batch_first=True, dropout=0.3, bidirectional=True)
             self.agg_att = nn.Linear(N_h, N_h)
+
+            self.agg_bi_att=nn.Bilinear(N_h,N_h,1)
+
         else:
             print("Not using column attention on aggregator predicting")
             self.agg_att = nn.Linear(N_h, 1)
@@ -45,8 +48,10 @@ class AggPredictor(nn.Module):
                 chosen_sel_idx = chosen_sel_idx.cuda()
                 aux_range = aux_range.cuda()
             chosen_e_col = e_col[aux_range, chosen_sel_idx]
-            att_val = torch.bmm(self.agg_att(h_enc), 
+            att_val = torch.bmm(self.agg_att(h_enc),
                     chosen_e_col.unsqueeze(2)).squeeze()
+
+            # att_val=self.agg_bi_att(h_enc,chosen_e_col.unsqueeze(1).repeat(1,h_enc.shape[1],1)).squeeze()
         else:
             att_val = self.agg_att(h_enc).squeeze()
 
