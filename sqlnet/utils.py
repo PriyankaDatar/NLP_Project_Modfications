@@ -169,7 +169,7 @@ def epoch_exec_acc(model, batch_size, sql_data, table_data, db_path):
         query_gt, table_ids = to_batch_query(sql_data, perm, st, ed)
         gt_sel_seq = [x[1] for x in ans_seq]
         score = model.forward(q_seq, col_seq, col_num,
-                (True, True, True), gt_sel=gt_sel_seq)
+                (True, True, True),ans_seq,None, gt_sel=gt_sel_seq.is_train=False)
         pred_queries = model.gen_query(score, q_seq, col_seq,
                 raw_q_seq, raw_col_seq, (True, True, True))
 
