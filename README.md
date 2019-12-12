@@ -2,6 +2,7 @@ We used the baseline code for SQLNEt as implemented by Xu et al. SQLNet: Generat
 This repository has the code changes made for the weight sharing task.The h_enc and col_encoding have been implemented as a base module and results of each submodule influence this representations.
 
 Files Modified:
+
 /sqlnet/utils.py
 
 /sqlnet/model/sqlnet.py
