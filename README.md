@@ -1,3 +1,16 @@
+We used the baseline code for SQLNEt as implemented by Xu et al. SQLNet: Generating Structured Queries from Natural Language Without Reinforcement Learning. 
+This repository has the code changes made for the weight sharing task.The h_enc and col_encoding have been implemented as a base module and results of each submodule influence this representations.
+
+Files Modified:
+/sqlnet/utils.py
+/sqlnet/model/sqlnet.py
+/sqlnet/model/modules/aggregator_predict.py
+/sqlnet/model/modules/selection_predict.py
+/sqlnet/model/modules/sqlnet_condition_predict.py
+
+
+
+
 # SQLNet
 
 This repo provides an implementation of SQLNet and Seq2SQL neural networks for predicting SQL queries on [WikiSQL dataset](https://github.com/salesforce/WikiSQL). The paper is available at [here](https://arxiv.org/abs/1711.04436).
