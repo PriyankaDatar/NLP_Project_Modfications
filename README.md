@@ -3,9 +3,13 @@ This repository has the code changes made for the weight sharing task.The h_enc 
 
 Files Modified:
 /sqlnet/utils.py
+
 /sqlnet/model/sqlnet.py
+
 /sqlnet/model/modules/aggregator_predict.py
+
 /sqlnet/model/modules/selection_predict.py
+
 /sqlnet/model/modules/sqlnet_condition_predict.py
 
 
