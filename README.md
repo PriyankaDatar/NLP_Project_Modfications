@@ -46,7 +46,7 @@ The data is in `data.tar.bz2`. Unzip the code by running
 tar -xjvf data.tar.bz2
 ```
 
-The code is written using PyTorch in Python 2.7. Check [here](http://pytorch.org/) to install PyTorch. You can install other dependency by running 
+The code is written using PyTorch in Python 3.6.9. Check [here](http://pytorch.org/) to install PyTorch. You can install other dependency by running 
 ```bash
 pip install -r requirements.txt
 ```
