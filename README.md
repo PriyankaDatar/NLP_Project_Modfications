@@ -14,6 +14,11 @@ Files Modified:
 /sqlnet/model/modules/sqlnet_condition_predict.py
 
 
+Versions:
+Python 3.6.9
+Pytorch 1.3.1
+
+
 
 
 # SQLNet
