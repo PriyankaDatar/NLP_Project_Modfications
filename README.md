@@ -76,15 +76,7 @@ Train a SQLNet model with column attention and trainable embedding (requires pre
 python train.py --ca --train_emb
 ```
 
-Pretrain a [Seq2SQL model](https://arxiv.org/abs/1709.00103) on the re-splitted dataset
-```bash
-python train.py --baseline --dataset 1
-```
 
-Train a Seq2SQL model with Reinforcement Learning after pretraining
-```bash
-python train.py --baseline --dataset 1 --rl
-```
 
 ## Test
 The script for evaluation on the dev split and test split. The parameters for evaluation is roughly the same as the one used for training. For example, the commands for evaluating the models from above commands are:
@@ -97,15 +89,5 @@ python test.py --ca
 Test a trained SQLNet model with column attention and trainable embedding:
 ```bash
 python test.py --ca --train_emb
-```
-
-Test a trained [Seq2SQL model](https://arxiv.org/abs/1709.00103) withour RL on the re-splitted dataset
-```bash
-python test.py --baseline --dataset 1
-```
-
-Test a trained Seq2SQL model with Reinforcement learning
-```bash
-python test.py --baseline --dataset 1 --rl
 ```
 
